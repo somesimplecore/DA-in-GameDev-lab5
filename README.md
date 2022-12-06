@@ -82,7 +82,7 @@ public class CheckConnectYG : MonoBehaviour
 
 - Практическая работа «Сохранение данных пользователя на платформе Яндекс Игры»
 
-Нам необходимо сохранять данные о максимальном количестве очков игрока. Для этого в уже существующий скрипт SavesYG добавим следующее публичное поле:
+Нам необходимо сохранять данные о количестве очков игрока. Для этого в уже существующий скрипт SavesYG добавим следующее публичное поле:
 
 ```C#
 public int score;
@@ -118,58 +118,54 @@ if (shieldList.Count == 0)
 
 - Практическая работа «Сбор данных об игроке и вывод их в интерфейсе»
 
+Реализуем систему, в которой мы будем выводить лучший счет игрока в главном меню. Для этого добавим публичное поле в скрипт SavesYG:
 
-
-
-
-Создадим меню настроек. Для этого сделаем дубликат объекта MainMenu, удалим лишние элементы и переименуем кнопку QUIT в BACK:
-
-![](/Pics/z1_10.jpg)
-
-Чтобы наши меню переключались между собой, поставим следующие настройки кнопкам OPTIONS и BACK:
-
-![](/Pics/z1_11.jpg)
-![](/Pics/z1_12.jpg)
-
-Далее сделаем паузу во время игры и возможность выхода в главное меню. Для этого напишем следующий код:
 ```C#
-using UnityEngine;
-using UnityEngine.SceneManagement;
-
-public class Pause : MonoBehaviour
-{
-    private bool isPaused = false;
-    public GameObject panel;
-
-    
-    void Update()
-    {
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            if(!isPaused)
-            {
-                Time.timeScale = 0;
-                isPaused = true;
-                panel.SetActive(true);
-            }
-            else
-            {
-                Time.timeScale = 1;
-                isPaused = false;
-                panel.SetActive(false);
-            }
-        }
-        if(Input.GetKeyDown(KeyCode.Escape))
-        {
-            SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex - 1);
-        }
-    }
-}
+public int bestScore;
 ```
 
-Затем прицепим этот скрипт на камеру и в поле panel перенесем наш текстовый объект, который мы будем выводить во время паузы. Конечный результат:
+Мы будем обновлять эту переменную в том случае, если текущий счет стал больше лучшего. Для этого в скрипте DragonPicker в методе SaveData допишем следующие строчки кода:
 
-![](/Pics/z1_13.jpg)
+```C#
+if(currentScore > YandexGame.savesData.bestScore)
+        {
+            YandexGame.savesData.bestScore = currentScore;
+        }
+```
+
+Чтобы значение отображалось, в скрипте CheckConnectYG добавим следующее поле:
+
+```C#
+private TextMeshProUGUI bestScore;
+```
+
+А в метод CheckSDK добавим следующие строчки:
+
+```C#
+bestScore = GameObject.Find("BestScore").GetComponent<TextMeshProUGUI>();
+bestScore.text = "Best score: " + YandexGame.savesData.bestScore.ToString();
+```
+
+На нашей сцене в канвасе создадим TMPro объект с названием "BestStore", где будет выводится наш лучший счет. Главное меню изменилось следующим образом:
+
+![](/Pics/z1_1.jpg)
+
+Теперь добавим имя игрока над персонажем на игровом поле. Для этого в канвасе создадим TMPro объект с названием "PlayerName", а в скрипт добавим следующее поле:
+
+```C#
+public TextMeshProUGUI playerName;
+```
+
+А в метод GetLoadSave следующие строчки:
+
+```C#
+playerName = GameObject.Find("PlayerName").GetComponent<TextMeshProUGUI>();
+playerName.text = YandexGame.playerName;
+```
+
+Теперь наше игровое поле имеет следующий вид:
+
+![](/Pics/z1_2.jpg)
 
 - Практическая работа «Добавление звукового сопровождения в игре»
 
