@@ -82,44 +82,45 @@ public class CheckConnectYG : MonoBehaviour
 
 - Практическая работа «Сохранение данных пользователя на платформе Яндекс Игры»
 
+Нам необходимо сохранять данные о максимальном количестве очков игрока. Для этого в уже существующий скрипт SavesYG добавим следующее публичное поле:
 
-
-
-
-
-Добавим UI эллементы в виде заголовка и кнопок:
-
-![](/Pics/z1_6.jpg)
-
-Напишем следующий скрипт для кнопок:
 ```C#
-using UnityEngine;
-using UnityEngine.SceneManagement;
-
-public class MainMenu : MonoBehaviour
-{
-    public void PlayGame()
-    {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex + 1);
-    }
-
-    public void QuitGame()
-    {
-        Application.Quit();
-    }
-}
+public int score;
 ```
 
-Прицепим скрипт на объект MainMenu и зададим следующие настройки кнопкам PLAY и QUIT:
+Для сохранения прогресса на серверах яндекс и вывода в консоль прогресса, добавим следующие 2 метода в скрипт DragonPicker, т.к. в нем происходит логика проигрыша:
 
-![](/Pics/z1_7.jpg)
-![](/Pics/z1_8.jpg)
+```C#
+public void GetLoadSave()
+    {
+        Debug.Log(YandexGame.savesData.score);
+    }
 
-В настройках проекта зададим следующую иерархию сцен, чтобы при нажатии на кнопку PLAY мы переходили из главного меню на игровое поле:
+    public void SaveData(int currentScore)
+    {
+        YandexGame.savesData.score = currentScore;
+        YandexGame.SaveProgress();
+    }
+```
 
-![](/Pics/z1_9.jpg)
+Будем вызывать эти методы после того, как наше здоровье упадет до 0:
 
-- Практическая работа «Доработка меню и функционала с остановкой игры»
+```C#
+if (shieldList.Count == 0)
+        {
+            GameObject scoreGO = GameObject.Find("Score");
+            scoreGT = scoreGO.GetComponent<TextMeshProUGUI>();
+            SaveData(int.Parse(scoreGT.text));
+            SceneManager.LoadScene("_0Scene");
+            GetLoadSave();
+        }
+```
+
+- Практическая работа «Сбор данных об игроке и вывод их в интерфейсе»
+
+
+
+
 
 Создадим меню настроек. Для этого сделаем дубликат объекта MainMenu, удалим лишние элементы и переименуем кнопку QUIT в BACK:
 
