@@ -70,6 +70,7 @@
     <Compile Include="Assets\YandexGame\Example\ExampleScripts\GetPlayerData.cs" />
     <Compile Include="Assets\YandexGame\Example\ExampleScripts\SwitchSceneTest.cs" />
     <Compile Include="Assets\_Scripts\Pause.cs" />
+    <Compile Include="Assets\_Scripts\CheckConnectYG.cs" />
     <Compile Include="Assets\YandexGame\ScriptsYG\DebuggingModeYG.cs" />
     <Compile Include="Assets\YandexGame\ScriptsYG\GetPlayerYG.cs" />
     <Compile Include="Assets\_Scripts\OnlineChecker.cs" />
@@ -86,7 +87,6 @@
     <Compile Include="Assets\_Scripts\DragonEgg.cs" />
     <Compile Include="Assets\YandexGame\ScriptsYG\ViewingAdsYG.cs" />
     <Compile Include="Assets\YandexGame\ScriptsYG\LeaderboardYG.cs" />
-    <Compile Include="Assets\_Scripts\CheckConnectYG.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />

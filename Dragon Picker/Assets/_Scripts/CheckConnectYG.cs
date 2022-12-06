@@ -33,7 +33,7 @@ public class CheckConnectYG : MonoBehaviour
 
         if(YandexGame.savesData.achievements.Count == 0)
         {
-
+            
         }
         else
         {
