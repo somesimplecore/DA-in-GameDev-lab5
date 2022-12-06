@@ -63,7 +63,6 @@
     <Compile Include="Assets\YandexGame\Example\ExampleScripts\LanguageExample.cs" />
     <Compile Include="Assets\YandexGame\Example\Content\DebugViewing\DebugViewing.cs" />
     <Compile Include="Assets\_Scripts\MainMenu.cs" />
-    <Compile Include="Assets\YandexGame\Example\ExampleScripts\SaverTest.cs" />
     <Compile Include="Assets\_Scripts\EnemyDragon.cs" />
     <Compile Include="Assets\YandexGame\Addons\UnityToolbag-main\ConditionallyVisiblePropertyDrawer\Runtime\ConditionallyVisibleAttribute.cs" />
     <Compile Include="Assets\YandexGame\ScriptsYG\PaymentsYG.cs" />
@@ -77,6 +76,7 @@
     <Compile Include="Assets\YandexGame\ScriptsYG\LanguageYG.cs" />
     <Compile Include="Assets\YandexGame\ScriptsYG\YandexGame.cs" />
     <Compile Include="Assets\YandexGame\ScriptsYG\GraphicSettingsYG.cs" />
+    <Compile Include="Assets\_Scripts\VolumeSettings.cs" />
     <Compile Include="Assets\YandexGame\WorkingData\SavesYG.cs" />
     <Compile Include="Assets\YandexGame\Example\ExampleScripts\OpenAuthorizationDialog.cs" />
     <Compile Include="Assets\YandexGame\Example\ExampleScripts\NewResultLeaderboard.cs" />
@@ -86,7 +86,7 @@
     <Compile Include="Assets\_Scripts\DragonEgg.cs" />
     <Compile Include="Assets\YandexGame\ScriptsYG\ViewingAdsYG.cs" />
     <Compile Include="Assets\YandexGame\ScriptsYG\LeaderboardYG.cs" />
-    <Compile Include="Assets\_Scripts\VolumeSettings.cs" />
+    <Compile Include="Assets\_Scripts\CheckConnectYG.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Assets\TextMesh Pro\Shaders\TMPro.cginc" />
