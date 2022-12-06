@@ -92,28 +92,28 @@ public int score;
 
 ```C#
 public void GetLoadSave()
-    {
-        Debug.Log(YandexGame.savesData.score);
-    }
+{
+    Debug.Log(YandexGame.savesData.score);
+}
 
-    public void SaveData(int currentScore)
-    {
-        YandexGame.savesData.score = currentScore;
-        YandexGame.SaveProgress();
-    }
+public void SaveData(int currentScore)
+{
+    YandexGame.savesData.score = currentScore;
+    YandexGame.SaveProgress();
+}
 ```
 
 Будем вызывать эти методы после того, как наше здоровье упадет до 0:
 
 ```C#
 if (shieldList.Count == 0)
-        {
-            GameObject scoreGO = GameObject.Find("Score");
-            scoreGT = scoreGO.GetComponent<TextMeshProUGUI>();
-            SaveData(int.Parse(scoreGT.text));
-            SceneManager.LoadScene("_0Scene");
-            GetLoadSave();
-        }
+{
+    GameObject scoreGO = GameObject.Find("Score");
+    scoreGT = scoreGO.GetComponent<TextMeshProUGUI>();
+    SaveData(int.Parse(scoreGT.text));
+    SceneManager.LoadScene("_0Scene");
+    GetLoadSave();
+}
 ```
 
 - Практическая работа «Сбор данных об игроке и вывод их в интерфейсе»
@@ -128,9 +128,9 @@ public int bestScore;
 
 ```C#
 if(currentScore > YandexGame.savesData.bestScore)
-        {
-            YandexGame.savesData.bestScore = currentScore;
-        }
+{
+    YandexGame.savesData.bestScore = currentScore;
+}
 ```
 
 Чтобы значение отображалось, в скрипте CheckConnectYG добавим следующее поле:
@@ -167,30 +167,67 @@ playerName.text = YandexGame.playerName;
 
 ![](/Pics/z1_2.jpg)
 
-- Практическая работа «Добавление звукового сопровождения в игре»
+- Практическая работа «Интеграция таблицы лидеров»
 
-Добавим в нашу папку все необходимы звуки:
-
-![](/Pics/z1_14.jpg)
-
-Добавим к камере в главном меню компонент AudioSource, в параметре Audio Clip выберем соответствующий звук, и включим два параметра Play On Awake и Loop.
-
-То же самое проделаем с камерой на игровом поле, префабом яйца и щита, только в последних двух выключим два параметра, чтобы наш звук проигрывался не сразу и не зацикливался. Добавим в наши скрипты яйца и щита следующие строчки в места, где требуется проигрывание звуков:
+Для того, чтобы лучший результат пользователя заносился в таблицу лидеров, добавим следующую строчку в скрипте DragonPicker, когда у игрока кончаются жизни:
 
 ```C#
-audioSource = GetComponent<AudioSource>();
-audioSource.Play();
+YandexGame.NewLeaderboardScores("TopPlayerScore", YandexGame.savesData.bestScore);
 ```
 
-- Практическая работа «Добавление персонажа и сборка сцены для публикации на web-ресурсе»
+На платформе Яндекс Игры в разделе лидербордов добавим новый с техническим названием "TopPlayerScore". Таким образом, наш лидерборд работает.
 
-Скачаем персонажа с анимацией с сайта maximo.com, перенесем файл в папку с префабами, настроим текстуры и контролер анимаций. Добавим персонажа на сцену:
+- Практическая работа «Интеграция системы достижений в проект»
 
-![](/Pics/z1_15.jpg)
+Сделаем в главном меню кнопку с достижениями и само поле для достижений:
 
-Затем добавим и настроим источник света для создания ощущения, что персонаж управляет щитом:
+![](/Pics/z1_3.jpg)
 
-![](/Pics/z1_16.jpg)
+![](/Pics/z1_4.jpg)
+
+Далее в скрипт SavesYG добавим следующую строчку:
+
+```C#
+public List<string> achievements = new List<string>()
+```
+
+Затем в скрипт CheckConnectYG добавим следующее поле, в котором будет храниться ссылка на TMPro наших достижений:
+
+```C#
+public TextMeshProUGUI achievements;
+```
+
+Затем в окне инспектора мы выберем наш объект, куда записываются достижения. Мы реализуем это таким образом, потому что метод GameObject.Find() не может находить объекты, если они отключены.
+
+Теперь добивим строчки кода, чтобы поле достижений заполнялось теми, которые есть у игрока:
+
+```C#
+if(YandexGame.savesData.achievements.Count == 0)
+{
+
+}
+else
+{
+    foreach(var value in YandexGame.savesData.achievements)
+    {
+        achievements.text = achievements.text + value + '\n';
+    }
+}
+```
+
+В скрипте DragonPicker, когда у нас будут кончаться щиты, будем делать проверку на то, есть ли у игрока достижение на первое поражение. Если нет, то мы его добавляем с помощью следующих строчек:
+
+```C#
+if(!YandexGame.savesData.achievements.Contains("Береги щиты!"))
+{
+    YandexGame.savesData.achievements.Add("Береги щиты!");  
+}    
+```
+
+Теперь тестируем наш код и, при поражении, в окне с достижениями получаем следующий результат:
+
+![](/Pics/z1_5.jpg)
+
 
 ## Задание 2
 ### Привести описание того, как происходит сборка проекта проекта под другие платформы. Какие могут быть особенности?
